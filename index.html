@@ -4,44 +4,402 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brisadoku · Puzles de lógica con focas</title>
-<meta name="description" content="Brisadoku: puzles de lógica con focas. Un reto diario para compartir y tableros sin límite. Gratis, sin anuncios y sin conexión.">
+<meta name="description" content="Coloca una foca por color, fila y columna sin que se toquen. Una Marea nueva cada día, 28 niveles hechos a mano y una ruta infinita con faros, corrientes, olas, remolinos y niebla. Gratis para Android.">
+<meta name="theme-color" content="#f7e3c4">
 <link rel="icon" href="icono.png">
+<link rel="apple-touch-icon" href="icono.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Brisadoku · Puzles de lógica con focas">
+<meta property="og:description" content="Una foca por color, fila y columna, sin que se toquen. Un reto nuevo cada día y una ruta que nunca se acaba.">
+<meta property="og:image" content="https://asp161.github.io/brisadoku-web/grafico.png">
+<meta property="og:url" content="https://asp161.github.io/brisadoku-web/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#193d47;--cream:#fffdf4;--coral:#e07a5f;--coral-edge:#a9503b;--sea:#cfe9e8;--sand:#f7e3c4}
+:root{
+  --ink:#193d47;--ink-soft:#41616a;--cream:#fffdf4;--paper:#fcfcf5;
+  --coral:#e07a5f;--coral-edge:#a9503b;--teal:#3f8a8c;--teal-edge:#28605f;
+  --sea:#cfe9e8;--sand:#f7e3c4;--mist:#e5f1ee;--mist-edge:#a9cbc8;--gold:#f2c14e;
+}
 *{box-sizing:border-box}
-body{margin:0;background:linear-gradient(var(--sand),var(--sea));color:var(--ink);font:500 1.05rem/1.6 Fredoka,system-ui,sans-serif;min-height:100vh}
-main{width:min(46rem,calc(100% - 2rem));margin:0 auto;padding:2.5rem 0 3rem}
-.hero{width:100%;border-radius:24px;box-shadow:0 6px 0 rgba(25,61,71,.15);display:block}
-h1{font-weight:700;font-size:clamp(2.4rem,8vw,3.6rem);margin:1.6rem 0 .2rem;color:var(--cream);-webkit-text-stroke:0;text-shadow:0 3px 0 var(--ink),2px 0 0 var(--ink),-2px 0 0 var(--ink),0 -2px 0 var(--ink),2px 2px 0 var(--ink),-2px 2px 0 var(--ink),2px -2px 0 var(--ink),-2px -2px 0 var(--ink),0 5px 0 var(--ink)}
-.tag{display:inline-block;background:var(--coral);color:var(--cream);font-weight:700;padding:.35rem 1rem .5rem;border-radius:14px;box-shadow:0 4px 0 var(--coral-edge)}
-ul{padding-left:1.2rem}
-.card{background:var(--cream);border-radius:20px;padding:1.2rem 1.4rem;margin-top:1.6rem;box-shadow:0 5px 0 rgba(25,61,71,.12)}
-a{color:#31666b}
-footer{margin-top:2rem;font-size:.9rem;color:#41616a}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:500 1.05rem/1.6 Fredoka,system-ui,sans-serif;
+  background:linear-gradient(180deg,var(--sand) 0,#f3e8d2 22rem,var(--sea) 60rem,#bfe0df 100%);min-height:100vh}
+img{max-width:100%;height:auto;display:block}
+.wrap{width:min(68rem,calc(100% - 2rem));margin:0 auto}
+a{color:#2d6468}
+
+/* Top bar */
+.top{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.25rem;text-decoration:none;color:var(--ink)}
+.brand img{width:40px;height:40px;border-radius:11px;box-shadow:0 3px 0 rgba(25,61,71,.18)}
+.lang{display:flex;background:var(--cream);border-radius:999px;padding:4px;box-shadow:0 3px 0 rgba(25,61,71,.12)}
+.lang button{font:inherit;font-weight:600;font-size:.9rem;border:0;background:none;color:var(--ink-soft);padding:.3rem .8rem;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center;padding:1.5rem 0 3rem}
+.eyebrow{display:inline-block;background:var(--cream);border-radius:999px;padding:.25rem .9rem;font-weight:600;font-size:.9rem;color:var(--teal-edge);box-shadow:0 3px 0 rgba(25,61,71,.1)}
+h1{font-weight:700;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.02;margin:.9rem 0 .8rem;color:var(--cream);
+  text-shadow:0 4px 0 var(--ink),3px 0 0 var(--ink),-3px 0 0 var(--ink),0 -3px 0 var(--ink),3px 3px 0 var(--ink),-3px 3px 0 var(--ink),3px -3px 0 var(--ink),-3px -3px 0 var(--ink),0 7px 0 rgba(25,61,71,.35)}
+.lead{font-size:1.2rem;max-width:32rem;margin:0 0 1.4rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:.55rem;font:inherit;font-weight:700;font-size:1.05rem;border:0;border-radius:16px;padding:.8rem 1.3rem;cursor:pointer;text-decoration:none;transition:transform .12s}
+.btn:active{transform:translateY(3px)}
+.btn-play{background:var(--ink);color:var(--cream);box-shadow:0 5px 0 #0d252c}
+.btn-play svg{width:22px;height:22px}
+.btn-play small{display:block;font-weight:500;font-size:.75rem;opacity:.8;line-height:1}
+.btn-try{background:var(--coral);color:var(--cream);box-shadow:0 5px 0 var(--coral-edge)}
+.facts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;padding:0;list-style:none}
+.facts li{background:rgba(255,253,244,.75);border-radius:12px;padding:.3rem .75rem;font-size:.92rem;font-weight:600}
+.facts b{color:var(--coral-edge)}
+
+.phone{position:relative;justify-self:center;width:min(260px,64vw)}
+.phone .frame{border-radius:38px;background:var(--ink);padding:10px;box-shadow:0 14px 0 rgba(25,61,71,.18),0 24px 50px rgba(25,61,71,.25);transform:rotate(2.5deg)}
+.phone .frame img{border-radius:29px;aspect-ratio:1/2;object-fit:cover;width:100%}
+.phone .buddy{position:absolute;z-index:2;width:112px;left:-58px;bottom:18px;filter:drop-shadow(0 6px 0 rgba(25,61,71,.18));animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+
+/* Sections */
+section{padding:2.5rem 0}
+h2{font-weight:700;font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.1;margin:0 0 .5rem}
+.sub{color:var(--ink-soft);margin:0 0 1.6rem;max-width:38rem}
+.card{background:var(--paper);border-radius:24px;padding:1.4rem;box-shadow:0 6px 0 rgba(25,61,71,.12);border:3px solid #e3efe9}
+
+/* Demo */
+.demo{display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start}
+.rules{display:grid;gap:.7rem;margin:0;padding:0;list-style:none}
+.rules li{display:flex;gap:.8rem;align-items:center;background:var(--mist);border-radius:16px;padding:.6rem .9rem}
+.rules img{width:44px;height:44px;flex:none}
+.board{--n:5;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:5px;width:min(340px,82vw);aspect-ratio:1;padding:9px;background:#fff;border-radius:22px;box-shadow:0 6px 0 rgba(25,61,71,.14);border:3px solid #d9e7e2;touch-action:manipulation;user-select:none}
+.cell{position:relative;border:0;border-radius:10px;cursor:pointer;padding:0;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08);transition:transform .1s,filter .15s}
+.cell:hover{filter:brightness(1.04)}
+.cell:active{transform:scale(.94)}
+.cell:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.cell.mark::after{content:"×";position:absolute;inset:0;display:grid;place-items:center;font-size:1.7rem;font-weight:600;color:rgba(25,61,71,.55)}
+.cell.seal{background-image:url(img/brisa-ficha.png);background-size:84%;background-repeat:no-repeat;background-position:center}
+.cell.seal{animation:pop .22s ease-out}
+.cell.bad{box-shadow:inset 0 0 0 3px #c4452f,inset 0 -4px 0 rgba(0,0,0,.08)}
+@keyframes pop{0%{transform:scale(.7)}70%{transform:scale(1.08)}}
+.board-side{position:relative;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.status{min-height:3.2em;text-align:center;font-weight:600;max-width:340px}
+.status.win{color:var(--teal-edge)}
+.mini-btns{display:flex;gap:.6rem}
+.btn-soft{background:var(--mist);color:var(--ink);box-shadow:0 4px 0 var(--mist-edge);font-size:.95rem;padding:.55rem 1rem}
+.win-burst{display:none;width:76px;margin-bottom:-.4rem;filter:drop-shadow(0 5px 0 rgba(25,61,71,.18))}
+.board-side.won .win-burst{display:block;animation:pop .35s ease-out}
+
+/* Features */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.feat{display:flex;flex-direction:column;gap:.4rem}
+.feat .ic{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;margin-bottom:.3rem}
+.feat .ic img{width:38px;height:38px}
+.feat h3{margin:0;font-size:1.2rem;line-height:1.2}
+.feat p{margin:0;color:var(--ink-soft);font-size:.98rem}
+
+.mechs{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.mech{display:flex;align-items:center;gap:.5rem;background:var(--cream);border-radius:14px;padding:.45rem .85rem .45rem .5rem;font-weight:600;box-shadow:0 3px 0 rgba(25,61,71,.1)}
+.mech img{width:30px;height:30px;background:var(--ink);border-radius:9px;padding:4px}
+.mech span{color:var(--ink-soft);font-weight:500;font-size:.85rem}
+
+/* Screens */
+.shots{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.4rem .2rem 1.2rem;margin:0 -.2rem;scrollbar-width:thin}
+.shots figure{margin:0;flex:0 0 min(220px,62vw);scroll-snap-align:start}
+.shots img{border-radius:22px;aspect-ratio:1/2;object-fit:cover;width:100%;box-shadow:0 6px 0 rgba(25,61,71,.15);border:4px solid var(--ink)}
+.shots figcaption{text-align:center;font-weight:600;font-size:.95rem;margin-top:.5rem}
+
+/* Honest */
+.honest{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center}
+.honest img{width:84px}
+.honest p{margin:.3rem 0 0;color:var(--ink-soft)}
+
+/* Final */
+.final{text-align:center;padding:3rem 0 2rem}
+.final img{width:120px;margin:0 auto .6rem}
+.final .cta-row{justify-content:center;margin-top:1.2rem}
+footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:.92rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;justify-content:space-between}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:2rem;padding-top:.5rem;text-align:left}
+  .phone .buddy{left:-30px;width:96px}
+  .demo{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .honest{grid-template-columns:1fr}
+  .lead{font-size:1.08rem}
+  .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
-<main>
-<img class="hero" src="grafico.png" width="1024" height="500" alt="Brisa, la foca, junto a un tablero de colores con focas en una cala al atardecer">
-<h1>Brisadoku</h1>
-<span class="tag">Puzles de lógica con focas</span>
-<div class="card">
-<p>Brisa te espera en la costa. Coloca una foca por color, fila y columna, sin que se toquen ni en diagonal. Cada día hay una Marea nueva, la misma para todo el mundo, para retar a tus amigos con tu tiempo.</p>
-<ul>
-<li>Catorce tableros diseñados a mano y una Ruta infinita sin límite.</li>
-<li>Pistas que explican la deducción cuando te atascas.</li>
-<li>Gratis, sin anuncios y sin conexión. En 14 idiomas.</li>
-</ul>
-<p><strong>Próximamente en Google Play.</strong></p>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./"><img src="icono.png" alt="" width="40" height="40">Brisadoku</a>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <span class="eyebrow" data-t="eyebrow">Puzles de lógica con focas</span>
+        <h1>Brisadoku</h1>
+        <p class="lead" data-t="lead">Coloca una foca por color, fila y columna, sin que se toquen. Sin adivinar: cada tablero se resuelve pensando. Brisa te espera en la costa con un reto nuevo cada día.</p>
+        <div class="cta-row">
+          <span class="btn btn-play" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fffdf4" d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.9-9.2c.5-.3.5-1.1 0-1.4L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></svg>
+            <span><small data-t="soon">Muy pronto en</small>Google Play</span>
+          </span>
+          <a class="btn btn-try" href="#prueba" data-t="try">Pruébalo aquí</a>
+        </div>
+        <ul class="facts">
+          <li><b>28</b> <span data-t="f1">niveles hechos a mano</span></li>
+          <li><b>∞</b> <span data-t="f2">ruta sin final</span></li>
+          <li><b>54</b> <span data-t="f3">logros</span></li>
+          <li><b>14</b> <span data-t="f4">idiomas</span></li>
+        </ul>
+      </div>
+      <div class="phone">
+        <div class="frame"><img id="hero-shot" src="img/es/01.jpg" width="540" height="1080" alt="Pantalla de inicio de Brisadoku con Brisa, la foca"></div>
+        <img class="buddy" src="img/brisa-feliz.png" width="256" height="256" alt="">
+      </div>
+    </div>
+
+    <section id="prueba">
+      <h2 data-t="demoTitle">Juega uno ahora</h2>
+      <p class="sub" data-t="demoSub">Este es el nivel 3 del juego. Toca una casilla para marcarla con una ×, otra vez para poner una foca y otra para vaciarla.</p>
+      <div class="card demo">
+        <div class="board-side" id="board-side">
+          <div class="board" id="board" role="grid" aria-label="Tablero de 5 por 5"></div>
+          <img class="win-burst" src="img/brisa-celebra.png" width="256" height="256" alt="">
+          <p class="status" id="status" aria-live="polite" data-t="statusStart">Pon 5 focas.</p>
+          <div class="mini-btns">
+            <button type="button" class="btn btn-soft" id="reset" data-t="reset">Empezar de nuevo</button>
+          </div>
+        </div>
+        <ul class="rules">
+          <li><img src="img/rule-color.svg" alt=""><span data-t="r1"><b>Una por color.</b> Cada zona de color lleva exactamente una foca.</span></li>
+          <li><img src="img/rule-lines.svg" alt=""><span data-t="r2"><b>Una por fila y columna.</b> Ni más ni menos.</span></li>
+          <li><img src="img/rule-space.svg" alt=""><span data-t="r3"><b>Sin tocarse.</b> Tampoco en diagonal: cada foca quiere su espacio.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-t="whatTitle">Lo que te espera</h2>
+      <p class="sub" data-t="whatSub">Partidas cortas para el café o largas para el sofá, y siempre algo nuevo que desbloquear.</p>
+      <div class="grid">
+        <div class="card feat">
+          <div class="ic" style="background:#dff1ec"><img src="img/modo-marea.svg" alt="" style="filter:brightness(.25)"></div>
+          <h3 data-t="c1t">La Marea del día</h3>
+          <p data-t="c1p">El mismo tablero para todo el mundo. Resuélvelo, compite en la Liga de la marea y comparte tu tiempo.</p>
+        </div>
+        <div class="card feat">
+          <div class="ic" style="background:#fbe7c8"><img src="img/estrella.svg" alt=""></div>
+          <h3 data-t="c2t">Una ruta que no se acaba</h3>
+          <p data-t="c2p">28 niveles hechos a mano y, después, tableros nuevos sin final que van subiendo poco a poco.</p>
+        </div>
+        <div class="card feat">
+          <div class="ic" style="background:#f6dcd3"><img src="img/cofre-coral.svg" alt=""></div>
+          <h3 data-t="c3t">Cofres y vestidor</h3>
+          <p data-t="c3p">Gana estrellas, abre cofres y viste a Brisa: pelajes, gorros, auras, fondos y 15 amigos del mar.</p>
+        </div>
+        <div class="card feat">
+          <div class="ic" style="background:#e6e0f5"><img src="img/faro.svg" alt="" style="filter:brightness(.25)"></div>
+          <h3 data-t="c4t">Pistas que enseñan</h3>
+          <p data-t="c4p">Si te atascas, la pista te explica el razonamiento y te señala la zona. Aprendes a verlo tú.</p>
+        </div>
+        <div class="card feat">
+          <div class="ic" style="background:#fdf0c9"><img src="img/medalla.svg" alt=""></div>
+          <h3 data-t="c5t">Logros y racha</h3>
+          <p data-t="c5p">54 logros, misiones diarias y un pase de temporada lleno de premios.</p>
+        </div>
+        <div class="card feat">
+          <div class="ic" style="background:#dbeef0"><img src="img/concha.svg" alt=""></div>
+          <h3 data-t="c6t">Hecho para todos</h3>
+          <p data-t="c6p">Sin conexión, en 14 idiomas, con ayuda para daltonismo, letra grande y modo de un toque.</p>
+        </div>
+      </div>
+      <div class="mechs" aria-label="Mecánicas">
+        <div class="mech"><img src="img/faro.svg" alt=""><div data-t="m1">Faros <span>cuentan focas alrededor</span></div></div>
+        <div class="mech"><img src="img/corriente.svg" alt=""><div data-t="m2">Corrientes <span>señalan hacia dónde</span></div></div>
+        <div class="mech"><img src="img/ola.svg" alt=""><div data-t="m3">Olas <span>miran en diagonal</span></div></div>
+        <div class="mech"><img src="img/remolino.svg" alt=""><div data-t="m4">Remolinos <span>igualan distancias</span></div></div>
+        <div class="mech"><img src="img/niebla.svg" alt=""><div data-t="m5">Niebla <span>esconde los colores</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-t="shotsTitle">Así se ve</h2>
+      <div class="shots" id="shots">
+        <figure><img loading="lazy" src="img/es/01.jpg" width="540" height="1080" alt=""><figcaption data-t="s1">Brisa te recibe</figcaption></figure>
+        <figure><img loading="lazy" src="img/es/02.jpg" width="540" height="1080" alt=""><figcaption data-t="s2">La Marea del día</figcaption></figure>
+        <figure><img loading="lazy" src="img/es/03.jpg" width="540" height="1080" alt=""><figcaption data-t="s3">Niveles dorados</figcaption></figure>
+        <figure><img loading="lazy" src="img/es/04.jpg" width="540" height="1080" alt=""><figcaption data-t="s4">La Liga de la marea</figcaption></figure>
+        <figure><img loading="lazy" src="img/es/06.jpg" width="540" height="1080" alt=""><figcaption data-t="s5">Cofres con sorpresa</figcaption></figure>
+        <figure><img loading="lazy" src="img/es/07.jpg" width="540" height="1080" alt=""><figcaption data-t="s6">Amigos del mar</figcaption></figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="card honest">
+        <img src="img/brisa-ficha.png" width="256" height="256" alt="">
+        <div>
+          <h2 data-t="freeTitle" style="font-size:1.6rem">Gratis, y sin trampas</h2>
+          <p data-t="freeP">Todos los niveles son gratis. Sin el pase hay un banner bajo el tablero y vídeos que solo ves si quieres. Brisa Premium quita los anuncios y da vidas y pistas sin límite.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <img src="img/brisa-celebra.png" width="256" height="256" alt="">
+      <h2 data-t="finalTitle">Brisa ya está en la orilla</h2>
+      <p class="sub" style="margin:0 auto" data-t="finalSub">Llega muy pronto a Android. Mientras, practica con el tablero de arriba.</p>
+      <div class="cta-row">
+        <span class="btn btn-play" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fffdf4" d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.9-9.2c.5-.3.5-1.1 0-1.4L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></svg>
+          <span><small data-t="soon">Muy pronto en</small>Google Play</span>
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Brisadoku</span>
+    <span><a href="privacidad.html" data-t="privacy">Política de privacidad</a> · <a href="mailto:brisadoku.juego@gmail.com" data-t="contact">Contacto</a></span>
+  </footer>
 </div>
-<div class="card" lang="en">
-<p><strong>Brisadoku · Logic puzzles with seals.</strong> Place one seal per color, row and column, with no two touching. A new Daily Tide every day, the same for everyone. Free, no ads, playable offline, in 14 languages. Coming soon to Google Play.</p>
-</div>
-<footer>
-<a href="privacidad.html">Política de privacidad · Privacy policy</a>
-</footer>
-</main>
+
+<script>
+(function(){
+  const T = {
+    en: {
+      eyebrow:"Logic puzzles with seals",
+      lead:"Place one seal per colour, row and column, with no two touching. No guessing: every board is solved by thinking. Brisa is waiting on the shore with a new challenge every day.",
+      soon:"Coming soon on", try:"Try it here",
+      f1:"handmade levels", f2:"endless route", f3:"achievements", f4:"languages",
+      demoTitle:"Play one now",
+      demoSub:"This is level 3 of the game. Tap a square to mark it with an ×, again to place a seal and once more to clear it.",
+      statusStart:"Place 5 seals.", reset:"Start over",
+      r1:"<b>One per colour.</b> Every colour area holds exactly one seal.",
+      r2:"<b>One per row and column.</b> No more, no less.",
+      r3:"<b>No touching.</b> Not even diagonally: every seal wants its space.",
+      whatTitle:"What's waiting for you",
+      whatSub:"Short games with your coffee or long ones on the sofa, and always something new to unlock.",
+      c1t:"The Daily Tide", c1p:"The same board for everyone. Solve it, compete in the Tide League and share your time.",
+      c2t:"A route that never ends", c2p:"28 handmade levels, then endless new boards that slowly climb in challenge.",
+      c3t:"Chests and wardrobe", c3p:"Earn stars, open chests and dress Brisa up: coats, hats, auras, backdrops and 15 sea friends.",
+      c4t:"Hints that teach", c4p:"Stuck? The hint explains the reasoning and lights up the area, so you learn to see it yourself.",
+      c5t:"Achievements and streaks", c5p:"54 achievements, daily missions and a season pass full of prizes.",
+      c6t:"Made for everyone", c6p:"Plays offline, in 14 languages, with colour-blind help, large text and one-tap mode.",
+      m1:"Lighthouses <span>count seals around</span>", m2:"Currents <span>point the way</span>", m3:"Waves <span>look diagonally</span>",
+      m4:"Whirlpools <span>match distances</span>", m5:"Fog <span>hides the colours</span>",
+      shotsTitle:"Take a look",
+      s1:"Brisa welcomes you", s2:"The Daily Tide", s3:"Golden levels", s4:"The Tide League", s5:"Surprise chests", s6:"Sea friends",
+      freeTitle:"Free, no tricks",
+      freeP:"Every level is free. Without the pass there's a banner under the board and videos you only watch if you want. Brisa Premium removes ads and gives unlimited lives and hints.",
+      finalTitle:"Brisa is already on the shore", finalSub:"Coming very soon to Android. Meanwhile, practise with the board above.",
+      privacy:"Privacy policy", contact:"Contact",
+      placed:n=>`${n} of 5 seals.`, clash:"Two seals clash: same row, column or colour, or touching.",
+      win:"Solved! That's Brisadoku. Imagine 28 handmade levels and an endless route…",
+      cell:(r,c,s)=>`Row ${r}, column ${c}, ${s}`, empty:"empty", mark:"marked", seal:"seal",
+      board:"5 by 5 board", heroAlt:"Brisadoku home screen with Brisa the seal"
+    },
+    es: {
+      placed:n=>`${n} de 5 focas.`, clash:"Dos focas chocan: misma fila, columna o color, o se tocan.",
+      win:"¡Resuelto! Así es Brisadoku. Imagina 28 niveles hechos a mano y una ruta sin final…",
+      cell:(r,c,s)=>`Fila ${r}, columna ${c}, ${s}`, empty:"vacía", mark:"marcada", seal:"foca",
+      board:"Tablero de 5 por 5", heroAlt:"Pantalla de inicio de Brisadoku con Brisa, la foca"
+    }
+  };
+  // Spanish texts live in the page itself; remember them so the switch can come back.
+  document.querySelectorAll('[data-t]').forEach(el => { const k = el.dataset.t; if (!(k in T.es)) T.es[k] = el.innerHTML; });
+  const SHOT_FILES = ['01','02','03','04','06','07'];
+  let lang = 'es';
+  try { lang = localStorage.getItem('brisadoku-lang') || ''; } catch (e) { lang = ''; }
+  if (lang !== 'es' && lang !== 'en') lang = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+
+  function setLang(next){
+    lang = next;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-t]').forEach(el => { const v = T[lang][el.dataset.t]; if (typeof v === 'string') el.innerHTML = v; });
+    document.querySelectorAll('[data-set-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
+    const folder = lang === 'es' ? 'es' : 'en';
+    document.getElementById('hero-shot').src = `img/${folder}/01.jpg`;
+    document.getElementById('hero-shot').alt = T[lang].heroAlt;
+    document.querySelectorAll('#shots img').forEach((img, i) => img.src = `img/${folder}/${SHOT_FILES[i]}.jpg`);
+    boardEl.setAttribute('aria-label', T[lang].board);
+    render();
+    try { localStorage.setItem('brisadoku-lang', lang); } catch (e) {}
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+
+  // Level 3 of the game: five colours, one seal each, the same rules as the app.
+  const N = 5;
+  const REGIONS = [0,0,0,1,1, 0,0,1,1,1, 2,3,3,3,1, 3,3,3,3,1, 3,3,3,3,4];
+  const COLORS = ['#efb3a3','#a3d3dc','#f0d499','#b6d5a2','#c9b8e3'];
+  const state = new Array(N*N).fill(0); // 0 empty, 1 ×, 2 seal
+  const boardEl = document.getElementById('board');
+  const statusEl = document.getElementById('status');
+  const side = document.getElementById('board-side');
+  const cells = [];
+  for (let i = 0; i < N*N; i++) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'cell'; b.setAttribute('role','gridcell');
+    b.style.backgroundColor = COLORS[REGIONS[i]];
+    b.addEventListener('click', () => tap(i));
+    b.addEventListener('keydown', e => move(e, i));
+    boardEl.appendChild(b); cells.push(b);
+  }
+  function move(e, i){
+    const r = Math.floor(i / N), c = i % N;
+    const to = {ArrowUp:[r-1,c],ArrowDown:[r+1,c],ArrowLeft:[r,c-1],ArrowRight:[r,c+1]}[e.key];
+    if (!to) return;
+    e.preventDefault();
+    const [nr, nc] = to;
+    if (nr >= 0 && nr < N && nc >= 0 && nc < N) cells[nr*N+nc].focus();
+  }
+  function solved(){ return seals().length === N && clashes().size === 0; }
+  function seals(){ return state.map((v,i) => v === 2 ? i : -1).filter(i => i >= 0); }
+  function clashes(){
+    const bad = new Set(), s = seals();
+    for (let a = 0; a < s.length; a++) for (let b = a+1; b < s.length; b++) {
+      const ra = Math.floor(s[a]/N), ca = s[a]%N, rb = Math.floor(s[b]/N), cb = s[b]%N;
+      if (ra === rb || ca === cb || REGIONS[s[a]] === REGIONS[s[b]] || (Math.abs(ra-rb) <= 1 && Math.abs(ca-cb) <= 1)) { bad.add(s[a]); bad.add(s[b]); }
+    }
+    return bad;
+  }
+  function tap(i){
+    if (solved()) return;
+    state[i] = (state[i] + 1) % 3;
+    render();
+  }
+  function render(){
+    const bad = clashes(), L = T[lang];
+    cells.forEach((b, i) => {
+      b.classList.toggle('mark', state[i] === 1);
+      b.classList.toggle('seal', state[i] === 2);
+      b.classList.toggle('bad', bad.has(i));
+      b.setAttribute('aria-label', L.cell(Math.floor(i/N)+1, i%N+1, state[i] === 2 ? L.seal : state[i] === 1 ? L.mark : L.empty));
+    });
+    const won = solved();
+    side.classList.toggle('won', won);
+    statusEl.classList.toggle('win', won);
+    statusEl.textContent = won ? L.win : bad.size ? L.clash : seals().length ? L.placed(seals().length) : (T[lang].statusStart || T.es.statusStart).replace(/<[^>]+>/g,'');
+  }
+  document.getElementById('reset').addEventListener('click', () => { state.fill(0); render(); });
+  setLang(lang);
+})();
+</script>
 </body>
 </html>
