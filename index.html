@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brisadoku · Puzles de lógica con focas</title>
-<meta name="description" content="Coloca una foca por color, fila y columna sin que se toquen. Una Marea nueva cada día, 28 niveles hechos a mano y una ruta infinita con faros, corrientes, olas, remolinos y niebla. Gratis para Android.">
+<meta name="description" content="Coloca una foca por color, fila y columna sin que se toquen. Una Marea nueva cada día y niveles infinitos con faros, corrientes, olas, remolinos y niebla. Gratis para Android.">
 <meta name="theme-color" content="#f7e3c4">
 <link rel="icon" href="icono.png">
 <link rel="apple-touch-icon" href="icono.png">
@@ -163,8 +163,8 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
           <a class="btn btn-try" href="#prueba" data-t="try">Pruébalo aquí</a>
         </div>
         <ul class="facts">
-          <li><b>28</b> <span data-t="f1">niveles hechos a mano</span></li>
-          <li><b>∞</b> <span data-t="f2">ruta sin final</span></li>
+          <li><b>∞</b> <span data-t="f1">niveles</span></li>
+          <li><b>5</b> <span data-t="f2">mecánicas</span></li>
           <li><b>54</b> <span data-t="f3">logros</span></li>
           <li><b>14</b> <span data-t="f4">idiomas</span></li>
         </ul>
@@ -206,8 +206,8 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
         </div>
         <div class="card feat">
           <div class="ic" style="background:#fbe7c8"><img src="img/estrella.svg" alt=""></div>
-          <h3 data-t="c2t">Una ruta que no se acaba</h3>
-          <p data-t="c2p">28 niveles hechos a mano y, después, tableros nuevos sin final que van subiendo poco a poco.</p>
+          <h3 data-t="c2t">Niveles infinitos</h3>
+          <p data-t="c2p">El camino nunca se acaba: tableros nuevos que van subiendo poco a poco y estrenan mecánicas por el camino.</p>
         </div>
         <div class="card feat">
           <div class="ic" style="background:#f6dcd3"><img src="img/cofre-coral.svg" alt=""></div>
@@ -287,7 +287,7 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       eyebrow:"Logic puzzles with seals",
       lead:"Place one seal per colour, row and column, with no two touching. No guessing: every board is solved by thinking. Brisa is waiting on the shore with a new challenge every day.",
       soon:"Coming soon on", try:"Try it here",
-      f1:"handmade levels", f2:"endless route", f3:"achievements", f4:"languages",
+      f1:"levels", f2:"mechanics", f3:"achievements", f4:"languages",
       demoTitle:"Play one now",
       demoSub:"This is level 3 of the game. Tap a square to mark it with an ×, again to place a seal and once more to clear it.",
       statusStart:"Place 5 seals.", reset:"Start over",
@@ -297,7 +297,7 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       whatTitle:"What's waiting for you",
       whatSub:"Short games with your coffee or long ones on the sofa, and always something new to unlock.",
       c1t:"The Daily Tide", c1p:"The same board for everyone. Solve it, compete in the Tide League and share your time.",
-      c2t:"A route that never ends", c2p:"28 handmade levels, then endless new boards that slowly climb in challenge.",
+      c2t:"Endless levels", c2p:"The path never ends: new boards that slowly climb in challenge and bring new mechanics along the way.",
       c3t:"Chests and wardrobe", c3p:"Earn stars, open chests and dress Brisa up: coats, hats, auras, backdrops and 15 sea friends.",
       c4t:"Hints that teach", c4p:"Stuck? The hint explains the reasoning and lights up the area, so you learn to see it yourself.",
       c5t:"Achievements and streaks", c5p:"54 achievements, daily missions and a season pass full of prizes.",
@@ -311,13 +311,13 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       finalTitle:"Brisa is already on the shore", finalSub:"Coming very soon to Android. Meanwhile, practise with the board above.",
       privacy:"Privacy policy", contact:"Contact",
       placed:n=>`${n} of 5 seals.`, clash:"Two seals clash: same row, column or colour, or touching.",
-      win:"Solved! That's Brisadoku. Imagine 28 handmade levels and an endless route…",
+      win:"Solved! That's Brisadoku. Now imagine endless levels…",
       cell:(r,c,s)=>`Row ${r}, column ${c}, ${s}`, empty:"empty", mark:"marked", seal:"seal",
       board:"5 by 5 board", heroAlt:"Brisadoku home screen with Brisa the seal"
     },
     es: {
       placed:n=>`${n} de 5 focas.`, clash:"Dos focas chocan: misma fila, columna o color, o se tocan.",
-      win:"¡Resuelto! Así es Brisadoku. Imagina 28 niveles hechos a mano y una ruta sin final…",
+      win:"¡Resuelto! Así es Brisadoku. Ahora imagina niveles sin fin…",
       cell:(r,c,s)=>`Fila ${r}, columna ${c}, ${s}`, empty:"vacía", mark:"marcada", seal:"foca",
       board:"Tablero de 5 por 5", heroAlt:"Pantalla de inicio de Brisadoku con Brisa, la foca"
     }
