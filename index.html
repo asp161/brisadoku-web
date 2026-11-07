@@ -78,6 +78,7 @@ h2{font-weight:700;font-size:clamp(1.8rem,4.5vw,2.5rem);line-height:1.1;margin:0
 .cell:hover{filter:brightness(1.04)}
 .cell:active{transform:scale(.94)}
 .cell:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.cell::before{content:attr(data-region);position:absolute;left:5px;top:2px;font-size:.72rem;font-weight:600;color:rgba(25,61,71,.5);line-height:1.2}
 .cell.mark::after{content:"×";position:absolute;inset:0;display:grid;place-items:center;font-size:1.7rem;font-weight:600;color:rgba(25,61,71,.55)}
 .cell.seal{background-image:url(img/brisa-ficha.png);background-size:84%;background-repeat:no-repeat;background-position:center}
 .cell.seal{animation:pop .22s ease-out}
@@ -177,7 +178,7 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
 
     <section id="prueba">
       <h2 data-t="demoTitle">Juega uno ahora</h2>
-      <p class="sub" data-t="demoSub">Este es el nivel 3 del juego. Toca una casilla para marcarla con una ×, otra vez para poner una foca y otra para vaciarla.</p>
+      <p class="sub" data-t="demoSub">Este es el nivel 3 del juego. Toca una casilla para marcarla con una ×, otra vez para poner una foca y otra para vaciarla. El número de cada casilla es su color.</p>
       <div class="card demo">
         <div class="board-side" id="board-side">
           <div class="board" id="board" role="grid" aria-label="Tablero de 5 por 5"></div>
@@ -289,7 +290,7 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       soon:"Coming soon on", try:"Try it here",
       f1:"levels", f2:"mechanics", f3:"achievements", f4:"languages",
       demoTitle:"Play one now",
-      demoSub:"This is level 3 of the game. Tap a square to mark it with an ×, again to place a seal and once more to clear it.",
+      demoSub:"This is level 3 of the game. Tap a square to mark it with an ×, again to place a seal and once more to clear it. Each square's number is its colour.",
       statusStart:"Place 5 seals.", reset:"Start over",
       r1:"<b>One per colour.</b> Every colour area holds exactly one seal.",
       r2:"<b>One per row and column.</b> No more, no less.",
@@ -312,13 +313,13 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       privacy:"Privacy policy", contact:"Contact",
       placed:n=>`${n} of 5 seals.`, clash:"Two seals clash: same row, column or colour, or touching.",
       win:"Solved! That's Brisadoku. Now imagine endless levels…",
-      cell:(r,c,s)=>`Row ${r}, column ${c}, ${s}`, empty:"empty", mark:"marked", seal:"seal",
+      cell:(r,c,k,s)=>`Row ${r}, column ${c}, colour ${k}, ${s}`, empty:"empty", mark:"marked", seal:"seal",
       board:"5 by 5 board", heroAlt:"Brisadoku home screen with Brisa the seal"
     },
     es: {
       placed:n=>`${n} de 5 focas.`, clash:"Dos focas chocan: misma fila, columna o color, o se tocan.",
       win:"¡Resuelto! Así es Brisadoku. Ahora imagina niveles sin fin…",
-      cell:(r,c,s)=>`Fila ${r}, columna ${c}, ${s}`, empty:"vacía", mark:"marcada", seal:"foca",
+      cell:(r,c,k,s)=>`Fila ${r}, columna ${c}, color ${k}, ${s}`, empty:"vacía", mark:"marcada", seal:"foca",
       board:"Tablero de 5 por 5", heroAlt:"Pantalla de inicio de Brisadoku con Brisa, la foca"
     }
   };
@@ -357,6 +358,8 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'cell'; b.setAttribute('role','gridcell');
     b.style.backgroundColor = COLORS[REGIONS[i]];
+    // The colour is also a number, for anyone who can't tell the colours apart or can't see them.
+    b.dataset.region = REGIONS[i] + 1;
     b.addEventListener('click', () => tap(i));
     b.addEventListener('keydown', e => move(e, i));
     boardEl.appendChild(b); cells.push(b);
@@ -390,7 +393,7 @@ footer{border-top:2px solid rgba(25,61,71,.1);padding:1.4rem 0 2.4rem;font-size:
       b.classList.toggle('mark', state[i] === 1);
       b.classList.toggle('seal', state[i] === 2);
       b.classList.toggle('bad', bad.has(i));
-      b.setAttribute('aria-label', L.cell(Math.floor(i/N)+1, i%N+1, state[i] === 2 ? L.seal : state[i] === 1 ? L.mark : L.empty));
+      b.setAttribute('aria-label', L.cell(Math.floor(i/N)+1, i%N+1, REGIONS[i]+1, state[i] === 2 ? L.seal : state[i] === 1 ? L.mark : L.empty));
     });
     const won = solved();
     side.classList.toggle('won', won);
